@@ -1,4 +1,4 @@
-﻿// Tencent is pleased to support the open source community by making UnLua available.
+// Tencent is pleased to support the open source community by making UnLua available.
 // 
 // Copyright (C) 2019 Tencent. All rights reserved.
 //
@@ -33,7 +33,11 @@
 
 namespace UnLua
 {
+#if ENGINE_MAJOR_VERSION < 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION < 6)
     constexpr EInternalObjectFlags AsyncObjectFlags = EInternalObjectFlags::AsyncLoading | EInternalObjectFlags::Async;
+#else
+    constexpr EInternalObjectFlags AsyncObjectFlags = EInternalObjectFlags_AsyncLoading | EInternalObjectFlags::Async;
+#endif
 
     TMap<lua_State*, FLuaEnv*> FLuaEnv::AllEnvs;
     FLuaEnv::FOnCreated FLuaEnv::OnCreated;

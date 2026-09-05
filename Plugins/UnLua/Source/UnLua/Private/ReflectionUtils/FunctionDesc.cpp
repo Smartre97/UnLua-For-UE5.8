@@ -268,7 +268,11 @@ void FFunctionDesc::BroadcastMulticastDelegate(lua_State *L, int32 NumParams, in
     FFlagArray CleanupFlags;
     const auto Params = Buffer->Get();
     PreCall(L, NumParams, FirstParamIndex, CleanupFlags, Params);
+#if ENGINE_MAJOR_VERSION < 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION < 8)
     ScriptDelegate->ProcessMulticastDelegate<UObject>(Params);
+#else
+    ScriptDelegate->ProcessDelegate<UObject>(Params);
+#endif
     PostCall(L, NumParams, FirstParamIndex, Params, CleanupFlags);      // !!! have no return values for multi-cast delegates
     Buffer->Pop(Params);
 }
