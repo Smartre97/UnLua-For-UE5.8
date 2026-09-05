@@ -1,4 +1,4 @@
-﻿#include "UnLuaConsoleCommands.h"
+#include "UnLuaConsoleCommands.h"
 
 #define LOCTEXT_NAMESPACE "UnLuaConsoleCommands"
 
@@ -58,13 +58,12 @@ namespace UnLua
             return;
         }
 
-        const auto& Format = TEXT(R"(
+        const auto Chunk = FString::Printf(TEXT(R"(
             local name = "%s"
             package.loaded[name] = nil
             collectgarbage("collect")
             require(name)
-        )");
-        const auto Chunk = FString::Printf(Format, *Args[0]);
+        )"), *Args[0]);
         Env->DoString(Chunk);
     }
 
