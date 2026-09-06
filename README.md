@@ -5,7 +5,29 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Tencent/UnLua/pulls)
 
 # Fork
-本仓库fork from Tencent/UnLua(https://github.com/Tencent/UnLua/pulls)
+本仓库fork from Tencent/UnLua(https://github.com/Tencent/UnLua/pulls)，于2026年9月3日对源仓库master分支进行修改，使适配ue5.8
+
+源插件基于 UnLua 2.3.6，直接用于 UE 5.8 时 UBT/编译会报错，导致项目 Development Editor 无法启动。Tag UE5.8_V1.0 完成 UE5.8 适配，Build.bat KB5p8Editor Win64 Development 验证通过。
+
+主要修改：
+- 把 Lua 内部类型 TString 重命名为LuaTString，避免与 UE5.8 Core 新增的 TString 模板别名冲突；仅为内部改名，不影响数据结构布局与 ABI。
+- ThirdParty/Lua/Lua.Build.cs：VisualStudio2019 分支改为仅在 UE5.4 之前编译(该枚举已在 5.4 移除)；并将废弃告警属性替换为 UE5.5/5.6 新 API，消除 CS0618。
+- UnLua UBT 插件 (.cs / .ubtplugin.csproj)：TargetFramework 由写死的 net6.0改为跟随引擎当前 .NET 版本(UE5.8 为 net10)，移除 .NET10 下报错的Microsoft.CSharp 包引用；UHT 导出器改用 UE5.5+ 的 Session.Modules /UhtModule API，解决 DLL 缺失导致构建失败的问题。
+- UnLua C++ 源码（9 个文件）：
+* UnLuaSettings.h：MetaClass 改为完整路径 /Script/CoreUObject.Object，适配 UE5.8 更严格的 UHT 校验；
+* UnLuaTemplate.h：补回 UE5.7+ 已移除的 TChooseClass / TIsTriviallyDestructible；
+* LuaEnv.cpp：使用 5.6+ 的 EInternalObjectFlags_AsyncLoading；
+* LuaFunction.cpp：UMetaData 在 5.8 已废弃，改调 FMetaData::CopyMetadata；
+* LuaOverridesClass.cpp：适配 5.7+ 的 UField::Next 变为 TObjectPtr<UField>；
+* PropertyRegistry.cpp：改用 UE5.8 新的基于名称的属性构造 API；
+* UnLuaBase.cpp / UnLuaConsoleCommands.cpp：适配 UE5.8 新增的编译期格式串校验；
+* FunctionDesc.cpp：ProcessMulticastDelegate 已废弃，改调 ProcessDelegate。
+- UnLuaExtensions（3 个 Build.cs）：更新为 UE5.5/5.6+ 的告警设置 API；LuaProtobuf / LuaRapidjson 改用 NoPCHs（避免共享 PCH 引入的告警/类型冲突，LuaRapidjson 同时关闭 shadow 告警以规避 C4459）。
+
+新增
+- Plugins/UnLua/.gitignore、
+- Plugins/UnLuaExtensions/.gitignore：
+忽略构建缓存（Intermediate/Binaries/Saved/obj/IDE 等），避免污染 git 历史。
 
 # 概述
 **UnLua**是适用于UE的一个高度优化的**Lua脚本解决方案**。它遵循UE的编程模式，功能丰富且易于学习，UE程序员可以零学习成本使用。
