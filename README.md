@@ -25,10 +25,6 @@
 * FunctionDesc.cpp：ProcessMulticastDelegate 已废弃，改调 ProcessDelegate。
 - UnLuaExtensions（3 个 Build.cs）：更新为 UE5.5/5.6+ 的告警设置 API；LuaProtobuf / LuaRapidjson 改用 NoPCHs（避免共享 PCH 引入的告警/类型冲突，LuaRapidjson 同时关闭 shadow 告警以规避 C4459）。
 
-新增
-- Plugins/UnLua/.gitignore、
-- Plugins/UnLuaExtensions/.gitignore：
-忽略构建缓存（Intermediate/Binaries/Saved/obj/IDE 等），避免污染 git 历史。
 
 # 概述
 **UnLua**是适用于UE的一个高度优化的**Lua脚本解决方案**。它遵循UE的编程模式，功能丰富且易于学习，UE程序员可以零学习成本使用。
