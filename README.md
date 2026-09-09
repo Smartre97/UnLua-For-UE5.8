@@ -6,7 +6,7 @@
 
 # Fork
 本仓库fork from Tencent/UnLua(https://github.com/Tencent/UnLua/pulls)      
-于2026年9月3日对源仓库master分支fork并进行修改，使适配ue5.8
+于2026年9月3日对源仓库master分支fork并进行修改，使适配ue5.8。内容在5.8breach中
 
 源插件基于 UnLua 2.3.6，直接用于 UE 5.8 时 UBT/编译会报错，导致项目 Development Editor 无法启动。Tag UE5.8_V1.0 完成 UE5.8 适配，Build.bat KB5p8Editor Win64 Development 验证通过。
 
