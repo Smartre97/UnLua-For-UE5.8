@@ -1,0 +1,26 @@
+# ============ UnLuaExtensions .gitignore ============
+# UE/UBT 生成的缓存（含 LuaProtobuf/LuaRapidjson/LuaSocket 各自目录）
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+
+# C# / dotnet 构建产物
+obj/
+bin/
+
+# IDE / 本地文件
+.vs/
+.idea/
+.vscode/
+*.sln
+*.slnx
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.user
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb

@@ -1,0 +1,37 @@
+# ============ UnLua plugin .gitignore ============
+# UE/UBT 生成的缓存，不入库
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+Platforms/
+
+# C# UBT 插件构建产物 (obj/bin)
+obj/
+bin/
+
+# IDE / 本地文件
+.vs/
+.idea/
+.vscode/
+*.sln
+*.slnx
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.user
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+
+# -------------------------------------------------
+# 以下 ThirdParty 预编译库是 UnLua 构建所必需的原始资源，
+# 不是缓存。根 .gitignore 会忽略 *.dll/*.lib/*.a 等，
+# 这里取消忽略，确保它们被提交到云端仓库。
+!Source/ThirdParty/Lua/**/*.dll
+!Source/ThirdParty/Lua/**/*.lib
+!Source/ThirdParty/Lua/**/*.a
+!Source/ThirdParty/Lua/**/*.dylib
+!Source/ThirdParty/Lua/**/*.so

@@ -67,10 +67,12 @@ void ULuaOverridesClass::AddToOwner()
     if (!Class)
         return;
 
-#if UE_VERSION_NEWER_THAN(5, 2, 1)
+#if UE_VERSION_NEWER_THAN(5, 2, 1) && UE_VERSION_OLDER_THAN(5, 7, 0)
     auto ChildrenPtr = Class->Children.Get();
 
     auto Field = &ChildrenPtr;
+#elif UE_VERSION_NEWER_THAN(5, 2, 1)
+    auto Field = &Class->Children;
 #else
     auto Field = &(Class->Children);
 #endif
@@ -97,12 +99,14 @@ void ULuaOverridesClass::RemoveFromOwner()
     if (!Class)
         return;
 
-#if UE_VERSION_NEWER_THAN(5, 2, 1)
+#if UE_VERSION_NEWER_THAN(5, 2, 1) && UE_VERSION_OLDER_THAN(5, 7, 0)
     auto ChildrenPtr = Class->Children.Get();
 
     auto Field = &ChildrenPtr;
-#else
+#elif UE_VERSION_NEWER_THAN(5, 2, 1)
     auto Field = &Class->Children;
+#else
+    auto Field = &(Class->Children);
 #endif
     while (*Field)
     {

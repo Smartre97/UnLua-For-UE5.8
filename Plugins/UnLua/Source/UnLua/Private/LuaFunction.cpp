@@ -1,4 +1,4 @@
-﻿// Tencent is pleased to support the open source community by making UnLua available.
+// Tencent is pleased to support the open source community by making UnLua available.
 // 
 // Copyright (C) 2019 Tencent. All rights reserved.
 //
@@ -19,6 +19,7 @@
 #include "UnLuaModule.h"
 #include "ReflectionUtils/PropertyDesc.h"
 #include "Misc/EngineVersionComparison.h"
+#include "UObject/MetaData.h"
 
 static constexpr uint8 ScriptMagicHeader[] = {EX_StringConst, 'L', 'U', 'A', '\0', EX_UInt64Const};
 static constexpr size_t ScriptMagicHeaderSize = sizeof ScriptMagicHeader;
@@ -141,7 +142,11 @@ void ULuaFunction::Override(UFunction* Function, UClass* Class, bool bAddNew)
     check(Function && Class && !From.IsValid());
 
 #if WITH_METADATA
+#if ENGINE_MAJOR_VERSION < 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION < 8)
     UMetaData::CopyMetadata(Function, this);
+#else
+    FMetaData::CopyMetadata(Function, this);
+#endif
 #endif
 
     bActivated = false;
