@@ -10,6 +10,8 @@
 
 源插件基于 UnLua 2.3.6，直接用于 UE 5.8 时 UBT/编译会报错，导致项目 Development Editor 无法启动。Tag UE5.8_V1.0 完成 UE5.8 适配，Build.bat KB5p8Editor Win64 Development 验证通过。
 
+特别备注：本项目由Deepseek flash参与生成修改，使用暂未发现问题
+
 主要修改：
 - 把 Lua 内部类型 TString 重命名为LuaTString，避免与 UE5.8 Core 新增的 TString 模板别名冲突；仅为内部改名，不影响数据结构布局与 ABI。
 - ThirdParty/Lua/Lua.Build.cs：VisualStudio2019 分支改为仅在 UE5.4 之前编译(该枚举已在 5.4 移除)；并将废弃告警属性替换为 UE5.5/5.6 新 API，消除 CS0618。
